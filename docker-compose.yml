@@ -1,0 +1,25 @@
+version: "3"
+
+services:
+  web:
+    image: nginx:latest
+    ports:
+      - "8080:80"
+    volumes:
+      - ./html:/usr/share/nginx/html
+    links:
+      - php
+  php:
+    build: .
+    volumes:
+      - ./html:/usr/share/nginx/html
+  db:
+    image: mysql:latest
+    restart: always
+    environment:
+      MYSQL_DATABASE: example
+      MYSQL_USER: example_user
+      MYSQL_PASSWORD: example_password
+      MYSQL_ROOT_PASSWORD: root_password
+    volumes:
+      - ./mysql:/var/lib/mysql
